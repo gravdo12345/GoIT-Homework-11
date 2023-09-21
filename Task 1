@@ -1,28 +1,18 @@
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
-public class Main {
-    // Method to get names with odd indices
-    public static String getNamesWithOddIndices(List<String> names) {
-        StringBuilder result = new StringBuilder();
-
-        for (int i = 0; i < names.size(); i++) {
-            if (i % 2 == 0) { // Check if the index is even
-                continue; // Skip this iteration if the index is even
-            }
-
-            if (result.length() > 0) {
-                result.append(", "); // Add a comma and space between names
-            }
-
-            result.append((i + 1) + ". " + names.get(i)); // Add the name to the result
-        }
-
-        return result.toString();
+public class NameProcessor {
+    public static String formatNames(List<String> names) {
+        return IntStream.range(0, names.size())
+                .filter(i -> i % 2 == 0)
+                .mapToObj(i -> (i + 1) + ". " + names.get(i))
+                .collect(Collectors.joining(", "));
     }
 
     public static void main(String[] args) {
-        List<String> names = List.of("Ivan", "Peter", "Mary", "John", "Jane");
-        String result = getNamesWithOddIndices(names);
-        System.out.println(result); // Print the result
+        List<String> names = List.of("Ivan", "Peter", "John", "Mary", "Alice");
+        String formattedNames = formatNames(names);
+        System.out.println(formattedNames); // Виведе "1. Ivan, 3. John, 5. Alice"
     }
 }
