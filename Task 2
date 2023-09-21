@@ -1,39 +1,23 @@
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class Main {
-    public static List<String> sortAndUpperCase(List<String> strings) {
-        // Create a new list to store the uppercase strings
-        List<String> result = new ArrayList<>();
-
-        // Convert strings to uppercase and add them to the result list
-        for (String str : strings) {
-            String upperCaseStr = str.toUpperCase();
-            result.add(upperCaseStr);
-        }
-
-        // Sort the result list in descending order
-        Collections.sort(result, Collections.reverseOrder());
-
-        return result;
+public class StringProcessor {
+    public static List<String> processAndSortStrings(List<String> strings) {
+        return strings.stream()
+                .map(String::toUpperCase) // Перетворення в верхній регістр
+                .sorted((str1, str2) -> str2.compareTo(str1)) // Сортування за спаданням
+                .collect(Collectors.toList());
     }
 
     public static void main(String[] args) {
-        // Create a list of strings
-        List<String> names = new ArrayList<>();
-        names.add("Ivan");
-        names.add("Peter");
-        names.add("Mary");
-        names.add("John");
-        names.add("Jane");
-
-        // Call the sortAndUpperCase method
-        List<String> result = sortAndUpperCase(names);
-
-        // Print the sorted and uppercase strings
-        for (String str : result) {
-            System.out.println(str);
-        }
+        List<String> names = List.of("Ivan", "Peter", "John", "Mary", "Alice");
+        List<String> sortedNames = processAndSortStrings(names);
+        sortedNames.forEach(System.out::println);
+        // Виведе:
+        // PETER
+        // MARY
+        // JOHN
+        // IVAN
+        // ALICE
     }
 }
